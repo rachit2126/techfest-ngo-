@@ -331,12 +331,12 @@ export default function HeroGeospatialPanel() {
             <button
               id="floating-unhide-map-btn"
               onClick={toggleMapPanel}
-              className="absolute top-8 right-0 z-30 flex items-center gap-2 px-3 py-2 rounded-l-2xl bg-[#081734]/95 backdrop-blur-md border-y border-l border-slate-700/80 text-white hover:text-emerald-400 shadow-2xl transition-all hover:pr-4 cursor-pointer group pointer-events-auto animate-in slide-in-from-right duration-200"
+              className="absolute top-2 sm:top-4 right-2 sm:right-4 z-30 flex items-center gap-2 px-4 py-1.5 rounded-full bg-[#071A3D]/90 backdrop-blur-md border border-slate-700/80 text-white hover:text-emerald-400 shadow-xl transition-all cursor-pointer group pointer-events-auto"
               title="Show Live Relief Map"
               aria-label="Show Live Relief Map"
             >
               <ChevronsLeft className="w-4 h-4 text-emerald-400 group-hover:-translate-x-0.5 transition-transform" />
-              <span className="text-[11px] font-bold tracking-tight">Show Live Relief Map</span>
+              <span className="text-xs font-bold tracking-tight">Show Live Relief Map</span>
             </button>
           )}
 
