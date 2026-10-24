@@ -46,13 +46,13 @@ export default function SahayLogo({
       ) : (
         // Header / Full / Footer
         <div className="flex items-center gap-3">
-          <div className="relative h-10 sm:h-11 w-auto shrink-0 flex items-center">
+          <div className="relative h-11 sm:h-12 w-auto shrink-0 flex items-center">
             <Image
               src={SAHAY_BRAND.assets.logoTransparent}
               alt="SAHAY"
-              width={160}
-              height={55}
-              className="h-10 sm:h-11 w-auto object-contain transition-transform duration-200 group-hover:scale-102"
+              width={180}
+              height={62}
+              className="h-11 sm:h-12 w-auto object-contain transition-transform duration-200 group-hover:scale-102"
               priority
             />
           </div>

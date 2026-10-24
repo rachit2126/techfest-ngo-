@@ -124,18 +124,16 @@ export default function Home() {
     <div className="flex flex-col bg-[#FCFBF7] text-[#182820]">
       {/* 1. HERO SECTION: Human-Centered, Authentic Sahay Identity */}
       <section className="relative w-full overflow-hidden bg-gradient-to-b from-[#FFF9E9] via-[#FCFBF7] to-[#FCFBF7] pt-4 pb-16 lg:pb-24 border-b border-[#E3EAE3]">
-        {/* Background Graphic Accent */}
-        <div className="absolute inset-0 pointer-events-none z-0 overflow-hidden opacity-40">
-          <div className="absolute top-0 right-0 w-full lg:w-[68%] xl:w-[63%] h-full">
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img
-              src="/hero_graphic.jpg"
-              alt="Sahay Humanitarian aid coordination"
-              className="w-full h-full object-cover object-right-top lg:object-center select-none"
-            />
-            <div className="absolute inset-y-0 left-0 w-full lg:w-[50%] bg-gradient-to-r from-[#FFF9E9] via-[#FCFBF7]/90 to-transparent" />
-            <div className="absolute inset-x-0 bottom-0 h-28 bg-gradient-to-t from-[#FCFBF7] to-transparent" />
-          </div>
+        {/* Full Hero Visual Background: Vibrant 3D Globe with Royal Blue Oceans, Neon Connections & Seamless Cream Transition */}
+        <div className="absolute inset-0 pointer-events-none z-0 overflow-hidden">
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            src="/hero_graphic.jpg"
+            alt="Sahay Humanitarian aid coordination and global relief network"
+            className="w-full h-full object-cover object-center select-none brightness-[1.02] contrast-[1.04]"
+          />
+          {/* Subtle bottom fade to blend into the metrics ribbon */}
+          <div className="absolute inset-x-0 bottom-0 h-16 bg-gradient-to-t from-[#FCFBF7] to-transparent" />
         </div>
 
         {/* Foreground Hero Content */}

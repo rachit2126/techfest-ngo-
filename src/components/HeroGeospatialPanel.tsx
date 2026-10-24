@@ -277,9 +277,9 @@ export default function HeroGeospatialPanel() {
             <div className="flex items-center bg-[#071A3D]/90 backdrop-blur-md rounded-full p-1 border border-slate-700/80 shadow-xl text-xs font-bold">
               <button
                 onClick={() => setViewMode('globe')}
-                className="px-3.5 py-1.5 rounded-full flex items-center gap-1.5 transition cursor-pointer bg-[#00A86B] text-white shadow-md shadow-emerald-600/30"
+                className="px-3.5 py-1.5 rounded-full flex items-center gap-1.5 transition cursor-pointer bg-[#075B3C] hover:bg-[#06452F] text-white shadow-md shadow-emerald-950/30"
               >
-                <Globe className="w-3.5 h-3.5" />
+                <Globe className="w-3.5 h-3.5 text-[#159C9A]" />
                 Globe View
               </button>
               <button
