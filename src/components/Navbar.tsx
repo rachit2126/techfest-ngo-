@@ -41,6 +41,43 @@ export default function Navbar() {
   const bizRef = useRef<HTMLDivElement>(null);
   const langRef = useRef<HTMLDivElement>(null);
 
+  const donateTimeoutRef = useRef<NodeJS.Timeout | null>(null);
+  const bizTimeoutRef = useRef<NodeJS.Timeout | null>(null);
+  const langTimeoutRef = useRef<NodeJS.Timeout | null>(null);
+
+  const handleDonateEnter = () => {
+    if (donateTimeoutRef.current) clearTimeout(donateTimeoutRef.current);
+    setDonateDropdown(true);
+  };
+  const handleDonateLeave = () => {
+    if (donateTimeoutRef.current) clearTimeout(donateTimeoutRef.current);
+    donateTimeoutRef.current = setTimeout(() => {
+      setDonateDropdown(false);
+    }, 220);
+  };
+
+  const handleBizEnter = () => {
+    if (bizTimeoutRef.current) clearTimeout(bizTimeoutRef.current);
+    setBizDropdown(true);
+  };
+  const handleBizLeave = () => {
+    if (bizTimeoutRef.current) clearTimeout(bizTimeoutRef.current);
+    bizTimeoutRef.current = setTimeout(() => {
+      setBizDropdown(false);
+    }, 220);
+  };
+
+  const handleLangEnter = () => {
+    if (langTimeoutRef.current) clearTimeout(langTimeoutRef.current);
+    setLangDropdown(true);
+  };
+  const handleLangLeave = () => {
+    if (langTimeoutRef.current) clearTimeout(langTimeoutRef.current);
+    langTimeoutRef.current = setTimeout(() => {
+      setLangDropdown(false);
+    }, 220);
+  };
+
   // Check auth status
   useEffect(() => {
     async function checkAuth() {
@@ -183,8 +220,8 @@ export default function Navbar() {
           <div
             ref={donateRef}
             className="relative"
-            onMouseEnter={() => setDonateDropdown(true)}
-            onMouseLeave={() => setDonateDropdown(false)}
+            onMouseEnter={handleDonateEnter}
+            onMouseLeave={handleDonateLeave}
           >
             <button
               onClick={() => setDonateDropdown(!donateDropdown)}
@@ -204,41 +241,49 @@ export default function Navbar() {
             </button>
 
             {donateDropdown && (
-              <div className={`absolute top-full left-0 w-64 mt-2 backdrop-blur-xl rounded-2xl shadow-[0_12px_36px_rgba(7,91,60,0.12)] p-2 z-50 animate-in fade-in slide-in-from-top-2 duration-150 ${
-                isDarkTheme
-                  ? 'bg-[#091b36]/95 border border-white/10 text-white'
-                  : 'bg-white/95 border border-[#E3EAE3]'
-              }`}>
-                <Link
-                  href="/donate/individual"
-                  onClick={() => setDonateDropdown(false)}
-                  className={`block px-3.5 py-2.5 rounded-xl transition group ${
-                    isDarkTheme ? 'hover:bg-white/10' : 'hover:bg-[#EAF3EC]'
-                  }`}
-                >
-                  <div className={`font-bold text-xs ${isDarkTheme ? 'text-white group-hover:text-cyan-400' : 'text-[#182820] group-hover:text-[#075B3C]'}`}>Individual & Community</div>
-                  <div className={`text-[11px] mt-0.5 ${isDarkTheme ? 'text-slate-400' : 'text-[#64746A]'}`}>Blankets, rations, clothing aid</div>
-                </Link>
-                <Link
-                  href="/donate/organisation"
-                  onClick={() => setDonateDropdown(false)}
-                  className={`block px-3.5 py-2.5 rounded-xl transition group ${
-                    isDarkTheme ? 'hover:bg-white/10' : 'hover:bg-[#EAF3EC]'
-                  }`}
-                >
-                  <div className={`font-bold text-xs ${isDarkTheme ? 'text-white group-hover:text-cyan-400' : 'text-[#182820] group-hover:text-[#075B3C]'}`}>Business & Surplus Lots</div>
-                  <div className={`text-[11px] mt-0.5 ${isDarkTheme ? 'text-slate-400' : 'text-[#64746A]'}`}>CSV bulk import with automated match</div>
-                </Link>
-                <Link
-                  href="/donations"
-                  onClick={() => setDonateDropdown(false)}
-                  className={`block px-3.5 py-2.5 rounded-xl transition group ${
-                    isDarkTheme ? 'hover:bg-white/10 border-t border-white/10' : 'hover:bg-[#EAF3EC] border-t border-[#E3EAE3]'
-                  }`}
-                >
-                  <div className={`font-bold text-xs ${isDarkTheme ? 'text-white group-hover:text-cyan-400' : 'text-[#182820] group-hover:text-[#075B3C]'}`}>Live Donation Ledger</div>
-                  <div className={`text-[11px] mt-0.5 ${isDarkTheme ? 'text-slate-400' : 'text-[#64746A]'}`}>Browse confirmed relief lots</div>
-                </Link>
+              <div
+                className="absolute top-full left-0 w-64 pt-2.5 z-50 animate-in fade-in slide-in-from-top-1 duration-150"
+                onMouseEnter={handleDonateEnter}
+                onMouseLeave={handleDonateLeave}
+              >
+                {/* Seamless invisible bridge so cursor movement between button and card never triggers mouseleave */}
+                <div className="absolute -top-3 left-0 right-0 h-4 bg-transparent" />
+                <div className={`backdrop-blur-xl rounded-2xl shadow-[0_12px_36px_rgba(7,91,60,0.14)] p-2 ${
+                  isDarkTheme
+                    ? 'bg-[#091b36]/95 border border-white/10 text-white'
+                    : 'bg-white/98 border border-[#E3EAE3]'
+                }`}>
+                  <Link
+                    href="/donate/individual"
+                    onClick={() => setDonateDropdown(false)}
+                    className={`block px-3.5 py-2.5 rounded-xl transition group ${
+                      isDarkTheme ? 'hover:bg-white/10' : 'hover:bg-[#EAF3EC]'
+                    }`}
+                  >
+                    <div className={`font-bold text-xs ${isDarkTheme ? 'text-white group-hover:text-cyan-400' : 'text-[#182820] group-hover:text-[#075B3C]'}`}>Individual & Community</div>
+                    <div className={`text-[11px] mt-0.5 ${isDarkTheme ? 'text-slate-400' : 'text-[#64746A]'}`}>Blankets, rations, clothing aid</div>
+                  </Link>
+                  <Link
+                    href="/donate/organisation"
+                    onClick={() => setDonateDropdown(false)}
+                    className={`block px-3.5 py-2.5 rounded-xl transition group ${
+                      isDarkTheme ? 'hover:bg-white/10' : 'hover:bg-[#EAF3EC]'
+                    }`}
+                  >
+                    <div className={`font-bold text-xs ${isDarkTheme ? 'text-white group-hover:text-cyan-400' : 'text-[#182820] group-hover:text-[#075B3C]'}`}>Business & Surplus Lots</div>
+                    <div className={`text-[11px] mt-0.5 ${isDarkTheme ? 'text-slate-400' : 'text-[#64746A]'}`}>CSV bulk import with automated match</div>
+                  </Link>
+                  <Link
+                    href="/donations"
+                    onClick={() => setDonateDropdown(false)}
+                    className={`block px-3.5 py-2.5 rounded-xl transition group ${
+                      isDarkTheme ? 'hover:bg-white/10 border-t border-white/10' : 'hover:bg-[#EAF3EC] border-t border-[#E3EAE3]'
+                    }`}
+                  >
+                    <div className={`font-bold text-xs ${isDarkTheme ? 'text-white group-hover:text-cyan-400' : 'text-[#182820] group-hover:text-[#075B3C]'}`}>Live Donation Ledger</div>
+                    <div className={`text-[11px] mt-0.5 ${isDarkTheme ? 'text-slate-400' : 'text-[#64746A]'}`}>Browse confirmed relief lots</div>
+                  </Link>
+                </div>
               </div>
             )}
           </div>
@@ -247,8 +292,8 @@ export default function Navbar() {
           <div
             ref={bizRef}
             className="relative"
-            onMouseEnter={() => setBizDropdown(true)}
-            onMouseLeave={() => setBizDropdown(false)}
+            onMouseEnter={handleBizEnter}
+            onMouseLeave={handleBizLeave}
           >
             <button
               onClick={() => setBizDropdown(!bizDropdown)}
@@ -266,31 +311,39 @@ export default function Navbar() {
             </button>
 
             {bizDropdown && (
-              <div className={`absolute top-full left-0 w-64 mt-2 backdrop-blur-xl rounded-2xl shadow-[0_12px_36px_rgba(7,91,60,0.12)] p-2 z-50 animate-in fade-in slide-in-from-top-2 duration-150 ${
-                isDarkTheme
-                  ? 'bg-[#091b36]/95 border border-white/10 text-white'
-                  : 'bg-white/95 border border-[#E3EAE3]'
-              }`}>
-                <Link
-                  href="/donate/organisation"
-                  onClick={() => setBizDropdown(false)}
-                  className={`block px-3.5 py-2.5 rounded-xl transition group ${
-                    isDarkTheme ? 'hover:bg-white/10' : 'hover:bg-[#EAF3EC]'
-                  }`}
-                >
-                  <div className={`font-bold text-xs ${isDarkTheme ? 'text-white group-hover:text-cyan-400' : 'text-[#182820] group-hover:text-[#075B3C]'}`}>Corporate Surplus Donation</div>
-                  <div className={`text-[11px] mt-0.5 ${isDarkTheme ? 'text-slate-400' : 'text-[#64746A]'}`}>Hotels, retailers & manufacturers</div>
-                </Link>
-                <Link
-                  href="/ngos/register"
-                  onClick={() => setBizDropdown(false)}
-                  className={`block px-3.5 py-2.5 rounded-xl transition group ${
-                    isDarkTheme ? 'hover:bg-white/10' : 'hover:bg-[#EAF3EC]'
-                  }`}
-                >
-                  <div className={`font-bold text-xs ${isDarkTheme ? 'text-white group-hover:text-cyan-400' : 'text-[#182820] group-hover:text-[#075B3C]'}`}>Partner NGO Intake</div>
-                  <div className={`text-[11px] mt-0.5 ${isDarkTheme ? 'text-slate-400' : 'text-[#64746A]'}`}>Statutory 80G verification enrollment</div>
-                </Link>
+              <div
+                className="absolute top-full left-0 w-64 pt-2.5 z-50 animate-in fade-in slide-in-from-top-1 duration-150"
+                onMouseEnter={handleBizEnter}
+                onMouseLeave={handleBizLeave}
+              >
+                {/* Seamless invisible bridge */}
+                <div className="absolute -top-3 left-0 right-0 h-4 bg-transparent" />
+                <div className={`backdrop-blur-xl rounded-2xl shadow-[0_12px_36px_rgba(7,91,60,0.14)] p-2 ${
+                  isDarkTheme
+                    ? 'bg-[#091b36]/95 border border-white/10 text-white'
+                    : 'bg-white/98 border border-[#E3EAE3]'
+                }`}>
+                  <Link
+                    href="/donate/organisation"
+                    onClick={() => setBizDropdown(false)}
+                    className={`block px-3.5 py-2.5 rounded-xl transition group ${
+                      isDarkTheme ? 'hover:bg-white/10' : 'hover:bg-[#EAF3EC]'
+                    }`}
+                  >
+                    <div className={`font-bold text-xs ${isDarkTheme ? 'text-white group-hover:text-cyan-400' : 'text-[#182820] group-hover:text-[#075B3C]'}`}>Corporate Surplus Donation</div>
+                    <div className={`text-[11px] mt-0.5 ${isDarkTheme ? 'text-slate-400' : 'text-[#64746A]'}`}>Hotels, retailers & manufacturers</div>
+                  </Link>
+                  <Link
+                    href="/ngos/register"
+                    onClick={() => setBizDropdown(false)}
+                    className={`block px-3.5 py-2.5 rounded-xl transition group ${
+                      isDarkTheme ? 'hover:bg-white/10' : 'hover:bg-[#EAF3EC]'
+                    }`}
+                  >
+                    <div className={`font-bold text-xs ${isDarkTheme ? 'text-white group-hover:text-cyan-400' : 'text-[#182820] group-hover:text-[#075B3C]'}`}>Partner NGO Intake</div>
+                    <div className={`text-[11px] mt-0.5 ${isDarkTheme ? 'text-slate-400' : 'text-[#64746A]'}`}>Statutory 80G verification enrollment</div>
+                  </Link>
+                </div>
               </div>
             )}
           </div>
@@ -372,7 +425,12 @@ export default function Navbar() {
           </form>
 
           {/* Language Selector Dropdown */}
-          <div ref={langRef} className="relative shrink-0">
+          <div
+            ref={langRef}
+            className="relative shrink-0"
+            onMouseEnter={handleLangEnter}
+            onMouseLeave={handleLangLeave}
+          >
             <button
               onClick={() => setLangDropdown(!langDropdown)}
               className={`w-8 h-8 rounded-full flex items-center justify-center transition-all cursor-pointer ${
@@ -387,31 +445,39 @@ export default function Navbar() {
             </button>
 
             {langDropdown && (
-              <div className={`absolute top-full right-0 w-44 mt-2 backdrop-blur-xl rounded-2xl shadow-[0_12px_36px_rgba(7,91,60,0.12)] p-1.5 z-50 animate-in fade-in slide-in-from-top-2 duration-150 text-xs ${
-                isDarkTheme
-                  ? 'bg-[#091b36]/95 border border-white/10 text-white'
-                  : 'bg-white/95 border border-[#E3EAE3]'
-              }`}>
-                <div className="px-2.5 py-1 text-[10px] font-bold text-[#88998F] uppercase tracking-wider">
-                  Select Language
+              <div
+                className="absolute top-full right-0 w-44 pt-2.5 z-50 animate-in fade-in slide-in-from-top-1 duration-150 text-xs"
+                onMouseEnter={handleLangEnter}
+                onMouseLeave={handleLangLeave}
+              >
+                {/* Seamless invisible bridge */}
+                <div className="absolute -top-3 left-0 right-0 h-4 bg-transparent" />
+                <div className={`backdrop-blur-xl rounded-2xl shadow-[0_12px_36px_rgba(7,91,60,0.14)] p-1.5 ${
+                  isDarkTheme
+                    ? 'bg-[#091b36]/95 border border-white/10 text-white'
+                    : 'bg-white/98 border border-[#E3EAE3]'
+                }`}>
+                  <div className="px-2.5 py-1 text-[10px] font-bold text-[#88998F] uppercase tracking-wider">
+                    Select Language
+                  </div>
+                  {languages.map((lang) => (
+                    <button
+                      key={lang.code}
+                      onClick={() => {
+                        setSelectedLang(lang.name);
+                        setLangDropdown(false);
+                      }}
+                      className={`w-full flex items-center justify-between px-2.5 py-1.5 rounded-xl text-left transition cursor-pointer ${
+                        selectedLang === lang.name
+                          ? isDarkTheme ? 'bg-cyan-500/20 text-cyan-300 font-bold' : 'bg-[#EAF3EC] text-[#075B3C] font-bold'
+                          : isDarkTheme ? 'text-slate-200 hover:bg-white/10' : 'text-[#182820] hover:bg-[#F4F8F5] font-medium'
+                      }`}
+                    >
+                      <span>{lang.native}</span>
+                      {selectedLang === lang.name && <Check className="w-3.5 h-3.5 text-[#075B3C]" />}
+                    </button>
+                  ))}
                 </div>
-                {languages.map((lang) => (
-                  <button
-                    key={lang.code}
-                    onClick={() => {
-                      setSelectedLang(lang.name);
-                      setLangDropdown(false);
-                    }}
-                    className={`w-full flex items-center justify-between px-2.5 py-1.5 rounded-xl text-left transition cursor-pointer ${
-                      selectedLang === lang.name
-                        ? isDarkTheme ? 'bg-cyan-500/20 text-cyan-300 font-bold' : 'bg-[#EAF3EC] text-[#075B3C] font-bold'
-                        : isDarkTheme ? 'text-slate-200 hover:bg-white/10' : 'text-[#182820] hover:bg-[#F4F8F5] font-medium'
-                    }`}
-                  >
-                    <span>{lang.native}</span>
-                    {selectedLang === lang.name && <Check className="w-3.5 h-3.5 text-[#075B3C]" />}
-                  </button>
-                ))}
               </div>
             )}
           </div>
